@@ -1,0 +1,144 @@
+﻿@model  EmployeeFormMVC.Models.Employee
+
+@using EmployeeFormMVC.Models
+
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+
+
+    .fr {
+        display: inline-block;
+        padding: 1rem;
+        color: black;
+    }
+
+    .form-border {
+        margin: auto;
+        width: 50%;
+        border: 3px solid grey;
+        padding: 10px;
+    }
+
+    .btnCenter {
+        margin: auto;
+    }
+
+    .text-danger {
+        color: red;
+        font: 300;
+    }
+
+    .Validation_error {
+        display: none;
+    }
+</style>
+
+
+
+<div class="form-border">
+    @using (@Html.BeginForm("Submit", "Home", FormMethod.Post))
+    {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger " })
+
+        <div class="form-group ">
+            <div class="labelContainer fr">EmCode</div>
+            <div class="valueContainer  fr ">
+                @Html.TextBoxFor(m => m.emCode, new { id = "Code", name = "Code", value = "int" })<br />
+             @*   @Html.ValidationMessageFor(m => m.emCode, "", new { @class = "text-danger " })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="labelContainer fr">EmName</div>
+            <div class="valueContainer fr">
+                @Html.TextBoxFor(m => m.emName, new { id = "Name", name = "Name", value = "String" })<br />
+              @*  @Html.ValidationMessageFor(m => m.emName, "", new { @class = "text-danger " })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="labelContainer fr">Date of Birth</div>
+            <div class="valueContainer fr">
+                @*  @Html.EditorFor(m => m.emDob, new { id = "DOB", name = "DOB", value = "Date", Type = "date" })*@
+                @Html.TextBoxFor(m => m.emDob, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+
+               @* @Html.ValidationMessageFor(m => m.emDob, "", new { @class = "text-danger " })*@
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="labelContainer fr">City</div>
+            <div class="valueContainer fr">
+
+                @Html.DropDownListFor(m => m.emCity,
+                                    new SelectList(Enum.GetValues(typeof(City))),
+                                    "Select City",
+                                    new { @class = "form-control", name = "City", value = "text" })
+              @*  @Html.ValidationMessageFor(m => m.emCity, "", new { @class = "text-danger " })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="labelContainer fr">Gender</div>
+            <div class="valueContainer fr" id="Gender">
+                @Html.RadioButtonFor(m => m.emGender, "Male", new { @checked = "checked" })
+                Male
+                @Html.RadioButtonFor(m => m.emGender, "FeMale")
+                Female
+                @Html.RadioButtonFor(m => m.emGender, "Other")
+                Other
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="labelContainer fr">IsActive</div>
+            <div class="valueContainer fr" id="Active">
+                @Html.RadioButtonFor(m => m.emActive, "Yes", new { @checked = "checked" })
+                Yes
+
+                @*  @Html.EditorFor(m=>m.emActive)*@
+                @Html.RadioButtonFor(m => m.emActive, "No")
+                No
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="labelContainer fr">Profile Img</div>
+            <div class="valueContainer fr" id="Active">
+
+                @Html.TextBoxFor(m => m.emImage, new { type = "file" })
+
+
+            </div>
+        </div>
+
+        @*<button type="submit" value="Upload" class="btn btn-primary" id="button" onclick="location.href='@Url.Action("Index", "Home")'">Submit</button>*@
+        <button type="submit" class="btn btn-primary" onclick="location.href = '@Url.Action("Submit", "Home")'">Submit</button>
+
+    }
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var er = document.querySelector('span.field-validation-error.text-danger');
+        if (er) {
+            er.style.display = "none";
+        }
+    });
+</script>
+
+
+
+
